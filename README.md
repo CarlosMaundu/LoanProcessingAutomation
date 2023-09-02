@@ -17,8 +17,16 @@
 1. Navigate to Google Forms.
 2. Click on the + Blank form button to create a new form.
 3. Name your form, for instance, "Loan Application Form".
-4. Add the fields as mentioned in the provided list.
-5. Once you've added all the fields, click on the Send button on the top right corner. Choose the link option and share the form with your intended audience.
+5. Add the following fields to your form:
+- Full Name: Text field (Required)
+- Phone Number: Text field (Required)
+- Email Address: Text field (Required)
+- Loan Amount Requested: Number field (Required)
+- Purpose of the Loan: Dropdown or multiple choice (Options: Business Support, Medical, School Fees, Emergency Expenses, Utility Bills, Other) (Required)
+- Do you have an existing Loan: Multiple choice (Options: Yes, No) (Required)
+- Terms and Conditions: Paragraph text (Paste the provided "Loan Details" content here)
+- I have read and agree to the terms and conditions: Checkbox (Option: I Agree) (Required)
+6. Once you've added all the fields, click on the **Send** button on the top right corner. Choose the link option and share the form with your intended audience.
 
 ### Generating the Google Sheet
 1. After creating the form, click on the Responses tab.
