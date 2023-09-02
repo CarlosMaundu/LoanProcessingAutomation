@@ -20,9 +20,29 @@
 4. Save and run the setup functions to initialize the necessary triggers.
 5. Ensure you have set the necessary permissions for sending emails and accessing the spreadsheet.
 
+
+## Setup
+### Google Form Creation
+1. Navigate to Google Forms.
+2. Click on the + Blank form button to create a new form.
+3. Name your form, for instance, "Loan Application Form".
+4. Add the fields as mentioned in the provided list.
+5. Once you've added all the fields, click on the Send button on the top right corner. Choose the link option and share the form with your intended audience.
+
+### Generating the Google Sheet
+1. After creating the form, click on the Responses tab.
+2. Click on the green Sheets icon. This will create a new Google Sheet that's linked to the form. All responses to the form will automatically populate this sheet.
+
+### Script Integration
+1. Open the generated Google Sheet.
+2. Go to Extensions > Apps Script.
+3. Copy and paste the provided LoanManagementApp script into the script editor.
+4. Save and run the setup functions to initialize the necessary triggers.
+5. Ensure you have set the necessary permissions for sending emails and accessing the spreadsheet.
+
 ## Usage
 
-1. **Loan Application**: Enter the loan application details in the designated Google Sheet.
+1. **Loan Application**: Users fill out the Google Form for loan applications..
 2. **Approval/Decline**: Update the 'Approval Status' column to either 'Approved' or 'Declined'. If declined, provide a reason in the 'Comments' column.
 3. **Repayment**: Update the 'Repayment Amount' column as repayments are made. The system will automatically calculate the outstanding amount and update the loan status.
 
