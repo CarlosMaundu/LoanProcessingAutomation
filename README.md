@@ -13,15 +13,6 @@
 - **Triggers & Automation**: Uses Google App Script triggers to automate various processes, ensuring real-time data processing.
 
 ## Setup
-
-1. Open your Google Sheet where you want to implement the `LoanManagementApp`.
-2. Go to Extensions > Apps Script.
-3. Copy and paste the provided script into the script editor.
-4. Save and run the setup functions to initialize the necessary triggers.
-5. Ensure you have set the necessary permissions for sending emails and accessing the spreadsheet.
-
-
-## Setup
 ### Google Form Creation
 1. Navigate to Google Forms.
 2. Click on the + Blank form button to create a new form.
