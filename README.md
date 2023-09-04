@@ -11,6 +11,8 @@
 - **Automated Notifications**: Sends email notifications to applicants upon loan approval or decline, with reasons for decline.
 - **Repayment Management**: Calculates outstanding amounts, updates loan statuses, and sends monthly reminders for repayments.
 - **Triggers & Automation**: Uses Google App Script triggers to automate various processes, ensuring real-time data processing.
+- **Dashboard**: There is a dashboard sheet with various loan statistics, including total loans, total amount loaned, defaulted loans, loan amount distribution, and more.
+- **Logging**: The system logs the activities performed by the users on the google sheet to ensure there is an audit log. 
 
 ## Setup
 ### Google Form Creation
@@ -48,7 +50,7 @@
 ### Script Integration
 1. Open the generated Google Sheet.
 2. Go to Extensions > Apps Script.
-3. Copy and paste the provided LoanManagementApp script into the script editor.
+3. Copy and paste the provided LoanManagementApp and dashboard script into the script editor.
 4. Save and run the setup functions to initialize the necessary triggers.
 5. Ensure you have set the necessary permissions for sending emails and accessing the spreadsheet.
 
@@ -57,6 +59,9 @@
 1. **Loan Application**: Users fill out the Google Form for loan applications..
 2. **Approval/Decline**: Update the 'Approval Status' column to either 'Approved' or 'Declined'. If declined, provide a reason in the 'Comments' column.
 3. **Repayment**: Update the 'Repayment Amount' column as repayments are made. The system will automatically calculate the outstanding amount and update the loan status.
+4. **Dashboard**: The updateDashboard function will automatically update the dashboard sheet with the latest statistics every day at midnight.
+5. **Monthly Reminders**: The sendMonthlyReminders function will automatically send monthly reminders to borrowers on the 1st of every month at 9 AM.
+6. **Logging**: The logChanges function will automatically log changes made to the spreadsheet in the "Logs" sheet.
 
 ## Future Enhancements
 
