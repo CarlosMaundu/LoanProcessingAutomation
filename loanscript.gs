@@ -1,5 +1,5 @@
 function processLoanApplication() {
-  var spreadsheetId = "1s2kaz4512zT-eYjuxM3X7mPv4_uHKGXFYf_trjiYw9E"; // Replace with your actual spreadsheet ID
+  var spreadsheetId = "Your google sheet file ID"; // Replace with your actual spreadsheet ID
   var sheet = SpreadsheetApp.openById(spreadsheetId).getActiveSheet();
   var lastRow = sheet.getLastRow();
   
@@ -67,7 +67,7 @@ function processLoanApplication() {
 
 
 function approveLoan(row) {
-  var spreadsheetId = "1s2kaz4512zT-eYjuxM3X7mPv4_uHKGXFYf_trjiYw9E";
+  var spreadsheetId = "Your google sheet file ID";
   var sheet = SpreadsheetApp.openById(spreadsheetId).getActiveSheet();
   
   var approvalStatus = sheet.getRange(row, 11).getValue(); // K
@@ -99,7 +99,7 @@ function approveLoan(row) {
 
 
 function handleRepayment(row) {
-  var spreadsheetId = "1s2kaz4512zT-eYjuxM3X7mPv4_uHKGXFYf_trjiYw9E";
+  var spreadsheetId = "Your google sheet file ID";
   var sheet = SpreadsheetApp.openById(spreadsheetId).getActiveSheet();
   
   var loanAmount = parseFloat(sheet.getRange(row, 7).getValue()); // G
@@ -123,7 +123,7 @@ function handleRepayment(row) {
 }
 
 function setupTriggers() {
-  var spreadsheetId = "1s2kaz4512zT-eYjuxM3X7mPv4_uHKGXFYf_trjiYw9E"; // Your spreadsheet ID
+  var spreadsheetId = "Your google sheet file ID"; // Your spreadsheet ID
 
   // Delete existing triggers (to avoid duplicates)
   var triggers = ScriptApp.getProjectTriggers();
@@ -179,7 +179,7 @@ function customOnEdit(e) {
 
 
 function sendEmailNotification(row) {
-  var sheet = SpreadsheetApp.openById("1s2kaz4512zT-eYjuxM3X7mPv4_uHKGXFYf_trjiYw9E").getActiveSheet();
+  var sheet = SpreadsheetApp.openById("Your google sheet file ID").getActiveSheet();
   
   var email = sheet.getRange(row, 6).getValue(); // F
   var approvalStatus = sheet.getRange(row, 11).getValue(); // K
@@ -212,7 +212,7 @@ function sendEmailNotification(row) {
 
 
 function sendMonthlyReminders() {
-  var sheet = SpreadsheetApp.openById("1s2kaz4512zT-eYjuxM3X7mPv4_uHKGXFYf_trjiYw9E").getActiveSheet();
+  var sheet = SpreadsheetApp.openById("Your google sheet file ID").getActiveSheet();
   var lastRow = sheet.getLastRow();
   
   // Assuming the Approval Status is in column K and Loan Status is in column Q
@@ -255,12 +255,12 @@ function setupMonthlyTrigger() {
 }
 
 function notifyApprover() {
-  var spreadsheetId = "1s2kaz4512zT-eYjuxM3X7mPv4_uHKGXFYf_trjiYw9E"; // Replace with your actual spreadsheet ID
+  var spreadsheetId = "Your google sheet file ID"; // Replace with your actual spreadsheet ID
   var sheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Application"); // Replace with your actual sheet name
   
   var lastRow = sheet.getLastRow();
   
-  var approverEmail = "maunducarlos@gmail.com"; // Replace with the actual email address of the approver
+  var approverEmail = "examples@gmail.com"; // Replace with the actual email address of the approver
   var applicantName = sheet.getRange(lastRow, 4).getValue(); // Assuming Full Name is in column D
   var loanAmount = sheet.getRange(lastRow, 7).getValue(); // Assuming Loan Amount Requested is in column G
   
