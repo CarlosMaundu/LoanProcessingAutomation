@@ -3,25 +3,68 @@ function processLoanApplication() {
   var sheet = SpreadsheetApp.openById(spreadsheetId).getActiveSheet();
   var lastRow = sheet.getLastRow();
   
+  var email = sheet.getRange(lastRow, 6).getValue(); // Assuming Email Address is in column F
+  
+  // Get all the data to check existing loans (excluding the last row)
+  var dataRange = sheet.getRange(2, 1, lastRow - 2, 18).getValues();
+  
+  var existingLoans = dataRange.filter(function(row) {
+    return row[5] === email; // Assuming Email Address is in column F (0-indexed)
+  });
+  
+  var totalExistingLoans = existingLoans.reduce(function(sum, loan) {
+    return sum + loan[6]; // Assuming Loan Amount Requested is in column G (0-indexed)
+  }, 0);
+
+  var maxLoanAmount = 50000;
+  var availableLoanAmount = maxLoanAmount - totalExistingLoans;
+  
+  var hasDefaulted = false;
+  var defaultedLoanOutstandingAmount = 0;
+  
+  existingLoans.forEach(function(loan) {
+    if (loan[16] === "Defaulted") { // Assuming Loan Status is in column Q (0-indexed)
+      hasDefaulted = true;
+      defaultedLoanOutstandingAmount += loan[15]; // Assuming Outstanding Amount is in column P (0-indexed)
+    }
+  });
+  
+  var loanAmount = sheet.getRange(lastRow, 7).getValue(); // Assuming Loan Amount Requested is in column G
+  
   // Generate Loan ID using timestamp
   var timestamp = new Date().getTime();
   var loanID = "LOAN-" + timestamp;
   sheet.getRange(lastRow, 3).setValue(loanID); // Assuming Loan ID is in column C
   
-  // Set Approval Status as Pending
-  sheet.getRange(lastRow, 11).setValue("Pending"); // Assuming Approval Status is in column K
-  
   // Set Loan Period based on Loan Amount Requested
-  var loanAmount = sheet.getRange(lastRow, 7).getValue(); // Assuming Loan Amount Requested is in column G
   var loanPeriod = loanAmount <= 20000 ? "3 Months" : "6 Months";
   sheet.getRange(lastRow, 12).setValue(loanPeriod); // Assuming Loan Period is in column L
   
-  // Repayment Due Date will be set when the loan is approved, so we'll handle that in a separate function
-  
   // Outstanding Amount (initially, without repayments)
   var outstandingAmount = loanAmount + (loanAmount * 0.05); // Loan amount + 5% interest
+  
+  if (hasDefaulted) {
+    sheet.getRange(lastRow, 11).setValue("Declined"); // Assuming Approval Status is in column K
+    var declineReason = "You have a defaulted loan. You need to repay the outstanding amount before applying for another loan. Your outstanding loan amount including interest is: " + defaultedLoanOutstandingAmount;
+    sheet.getRange(lastRow, 18).setValue(declineReason); // Assuming Comments is in column R
+    outstandingAmount = 0; // Reset outstanding amount to zero
+  } else if (loanAmount > availableLoanAmount) {
+    sheet.getRange(lastRow, 11).setValue("Declined"); // Assuming Approval Status is in column K
+    var declineReason = "The amount requested exceeds your available loan limit. You can apply for a maximum of " + availableLoanAmount + ".";
+    sheet.getRange(lastRow, 18).setValue(declineReason); // Assuming Comments is in column R
+    outstandingAmount = 0; // Reset outstanding amount to zero
+  } else {
+    // Set Approval Status as Pending
+    sheet.getRange(lastRow, 11).setValue("Pending"); // Assuming Approval Status is in column K
+  }
+  
   sheet.getRange(lastRow, 16).setValue(outstandingAmount); // Assuming Outstanding Amount is in column P
+
+  // Call the sendEmailNotification function to notify the applicant
+  sendEmailNotification(lastRow);
 }
+
+
 
 function approveLoan(row) {
   var spreadsheetId = "1s2kaz4512zT-eYjuxM3X7mPv4_uHKGXFYf_trjiYw9E";
@@ -53,7 +96,6 @@ function approveLoan(row) {
     sheet.getRange(row, 17).setValue("In Progress"); // Q
   }
 }
-
 
 
 function handleRepayment(row) {
@@ -211,3 +253,27 @@ function setupMonthlyTrigger() {
         .atHour(9) // You can adjust the hour as per your preference
         .create();
 }
+
+function notifyApprover() {
+  var spreadsheetId = "1s2kaz4512zT-eYjuxM3X7mPv4_uHKGXFYf_trjiYw9E"; // Replace with your actual spreadsheet ID
+  var sheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Application"); // Replace with your actual sheet name
+  
+  var lastRow = sheet.getLastRow();
+  
+  var approverEmail = "maunducarlos@gmail.com"; // Replace with the actual email address of the approver
+  var applicantName = sheet.getRange(lastRow, 4).getValue(); // Assuming Full Name is in column D
+  var loanAmount = sheet.getRange(lastRow, 7).getValue(); // Assuming Loan Amount Requested is in column G
+  
+  var subject = "New Loan Application Submitted";
+  var body = "A new loan application has been submitted by " + applicantName + " for an amount of " + loanAmount + ". Please review the application.";
+  
+  MailApp.sendEmail(approverEmail, subject, body);
+}
+
+
+
+
+
+
+
+ 
