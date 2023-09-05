@@ -71,7 +71,7 @@ function updateDashboard() {
     
     // Outstanding Amount
     if (approvalStatus === "In Progress" || approvalStatus === "Defaulted") {
-      outstandingAmount += loanAmount; // This should ideally be the outstanding amount, not the loan amount
+      outstandingAmount += loanAmount; 
     }
     
     // Average Repayment Time
@@ -95,7 +95,7 @@ function updateDashboard() {
   }
   
   // Update the Dashboard sheet with the calculated metrics
-  // This is a basic update, you might want to format or organize it better
+
   dashboard.getRange("A1").setValue("Total Loans");
   dashboard.getRange("A2").setValue(totalLoans);
   
@@ -138,8 +138,7 @@ function updateDashboard() {
   }
 
   // Outstanding Amount (assuming you have a date column to track when each loan was made)
-  // This would be more complex as you'd need to track outstanding amounts over time.
-  // For simplicity, I'm just showing the current outstanding amount.
+  
   dashboard.getRange("Z1").setValue("Outstanding Amount"); // Assuming Z column for this example
   dashboard.getRange("Z2").setValue(outstandingAmount);
 
