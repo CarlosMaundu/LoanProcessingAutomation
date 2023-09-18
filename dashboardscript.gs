@@ -156,13 +156,6 @@ function updateDashboard() {
 
 
 function setupDashboardUpdateTrigger() {
-  // Delete existing triggers (to avoid duplicates)
-  var triggers = ScriptApp.getProjectTriggers();
-  for (var i = 0; i < triggers.length; i++) {
-    if (triggers[i].getHandlerFunction() === "updateDashboard") {
-      ScriptApp.deleteTrigger(triggers[i]);
-    }
-  }
 
   // Create a new daily trigger for updating the dashboard
   ScriptApp.newTrigger('updateDashboard')
