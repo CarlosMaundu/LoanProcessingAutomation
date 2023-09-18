@@ -125,12 +125,7 @@ function handleRepayment(row) {
 function setupTriggers() {
   var spreadsheetId = "Your google sheet file ID"; // Your spreadsheet ID
 
-  // Delete existing triggers (to avoid duplicates)
-  var triggers = ScriptApp.getProjectTriggers();
-  for (var i = 0; i < triggers.length; i++) {
-    ScriptApp.deleteTrigger(triggers[i]);
-  }
-
+ 
   // Create a new onEdit trigger
   ScriptApp.newTrigger('customOnEdit')
     .forSpreadsheet(spreadsheetId)
@@ -208,9 +203,6 @@ function sendEmailNotification(row) {
   }
 }
 
-
-
-
 function sendMonthlyReminders() {
   var sheet = SpreadsheetApp.openById("Your google sheet file ID").getActiveSheet();
   var lastRow = sheet.getLastRow();
@@ -245,7 +237,6 @@ function sendMonthlyReminders() {
 
 function setupMonthlyTrigger() {
     
-
     // Create a new monthly trigger
     ScriptApp.newTrigger('sendMonthlyReminders')
         .timeBased()
